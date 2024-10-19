@@ -7,6 +7,8 @@ import { Trip } from '../models/trip';
 
 import { Router } from '@angular/router';
 
+// import { trips } from '../data/trips';
+
 @Component({
   selector: 'app-trip-listing',
   standalone: true,
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
 })
 
 export class TripListingComponent implements OnInit {
+  // trips: Array<any> = trips;
 
   trips!: Trip[];
   message: string = '';
