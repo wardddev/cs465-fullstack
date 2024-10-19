@@ -17,6 +17,12 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 // register handlebars partials (https://www.npmjs.com/package/hbs)
 handlebars.registerPartials(__dirname + '/app_server/views/partials');
 
+
+
+// missing lines on pg 59 of module six
+
+
+
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
@@ -25,6 +31,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Enable CORS
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  next();
+});
+
+// wire-up routes to controllers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
