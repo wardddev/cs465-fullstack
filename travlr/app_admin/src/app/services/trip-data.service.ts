@@ -14,12 +14,10 @@ export class TripDataService {
   url = 'http://localhost:3000/api/trips';
 
   getTrips() : Observable<Trip[]> {
-    // console.log('Inside TripsDataService::addTrips');
     return this.http.get<Trip[]>(this.url);
   }
 
   addTrip(formData: Trip) : Observable<Trip> {
-    // console.log('Inside TripsDataService::getTrips');
     return this.http.post<Trip>(this.url, formData);
   }
 
