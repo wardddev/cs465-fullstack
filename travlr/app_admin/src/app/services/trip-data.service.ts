@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { Trip } from '../models/trip';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,12 +24,12 @@ export class TripDataService {
   }
 
   getTrip(tripCode: string) : Observable<Trip[]> {
-    // console.log('Inside TripsDataService::getTrips');
+    // console.log('Inside TripDataService::getTrip');
     return this.http.get<Trip[]>(this.url + '/' + tripCode);
   }
 
   updateTrip(formData: Trip) : Observable<Trip> {
-    // console.log('Inside TripsDataService::addTrips');
+    // console.log('Inside TripDataService::updateTrip');
     return this.http.put<Trip>(this.url + '/' + formData.code, formData);
   }
 }

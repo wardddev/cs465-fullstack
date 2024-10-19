@@ -10,6 +10,7 @@ import { Trip } from '../models/trip';
   templateUrl: './trip-card.component.html',
   styleUrl: './trip-card.component.css'
 })
+
 export class TripCardComponent implements OnInit {
 
   @Input('trip') trip: any;
@@ -17,7 +18,7 @@ export class TripCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-
+    
   }
 
   public editTrip(trip: Trip) {
