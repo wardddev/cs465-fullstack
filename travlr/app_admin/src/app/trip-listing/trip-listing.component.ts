@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { trips } from '../data/trips';
-import { JsonPipe } from '@angular/common'; // v18 Angular requires
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-trip-listing',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [CommonModule],
   templateUrl: './trip-listing.component.html',
   styleUrl: './trip-listing.component.css'
 })
