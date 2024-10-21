@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 // register handlebars partials (https://www.npmjs.com/package/hbs)
 handlebars.registerPartials(__dirname + '/app_server/views/partials', () => {
   // debug to verify
-  console.log('Partials registered');
+  // console.log('Partials registered');
 });
 
 
