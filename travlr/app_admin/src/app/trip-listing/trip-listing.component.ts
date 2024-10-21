@@ -32,7 +32,7 @@ export class TripListingComponent implements OnInit {
           this.trips = value;
           if(value.length > 0)
           {
-            this.message = 'There are ' + value.length + 'trips available.';
+            this.message = 'There are ' + value.length + ' trips available.';
           } else {
             this.message = 'There were no trips retrieved from the database.';
           }
