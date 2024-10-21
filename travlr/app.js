@@ -22,7 +22,11 @@ var app = express();
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 
 // register handlebars partials (https://www.npmjs.com/package/hbs)
-handlebars.registerPartials(__dirname + '/app_server/views/partials');
+handlebars.registerPartials(__dirname + '/app_server/views/partials', () => {
+  // debug to verify
+  console.log('Partials registered');
+});
+
 
 app.set('view engine', 'hbs');
 
@@ -32,7 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/index', indexRouter); // won't render with just '/', defaults to index.html
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
 app.use('/rooms', roomsRouter);
