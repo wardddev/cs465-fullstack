@@ -7,13 +7,13 @@ import { Trip } from '../models/trip';
 @Injectable({
   providedIn: 'root'
 })
-export class TripDataService {
 
-  constructor(private http: HttpClient) { }
+export class TripDataService {
+  url = 'http://localhost:3000/api/trips';
+
+  constructor(private http: HttpClient) {}
 
   getTrips() : Observable<Trip[]> {
-    let url = 'http://localhost:3000/api/trips';
-
-    return this.http.get<Trip[]>(url);
+    return this.http.get<Trip[]>(this.url);
   }
 }
