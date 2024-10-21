@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const host = process.env.DB_HOST || '127.0.0.1';
 const dbURI = `mongodb://${host}/travlr`;
+
 const readLine = require('readline');
 
 // Build the connection string and set the connection timeout.
@@ -30,7 +31,7 @@ if(process.platform === 'win32'){
         output: process.stdout
     });
     r1.on('SIGINT', () => {
-    process.emit("SIGINT");
+        process.emit("SIGINT");
     });
 }
 
@@ -42,7 +43,6 @@ const gracefulShutdown = (msg) => {
 };
 
 // Event Listeners to process graceful shutdowns
-
 // Shutdown invoked by nodemon signal
 process.once('SIGUSR2', () => {
     gracefulShutdown('nodemon restart');
@@ -57,8 +57,8 @@ process.on('SIGINT', () => {
 
 // Shutdown invoked by container termination
 process.on('SIGTERM', () => {
-gracefulShutdown('app shutdown');
-process.exit(0);
+    gracefulShutdown('app shutdown');
+    process.exit(0);
 });
 
 // Make initial connection to DB

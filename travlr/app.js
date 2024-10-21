@@ -8,6 +8,7 @@ var logger = require('morgan');
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var travelRouter = require('./app_server/routes/travel');
+var roomsRouter = require('./app_server/routes/rooms');
 var apiRouter = require('./app_api/routes/index');
 
 var handlebars = require('hbs');
@@ -31,10 +32,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// wire-up routes to controllers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
+app.use('/rooms', roomsRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
