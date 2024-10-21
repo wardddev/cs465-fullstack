@@ -1,5 +1,5 @@
 <div class="row">
-    <div *ngFor="let trip of trips"> <!-- Angular for-loop -->
+    <div *ngFor="let trip of trips" class="col-3"> <!-- Angular for-loop -->
         <div class="card ml-4" style="width: 18rem;">
             <div class="card-header">{{ trip.name }}</div>
             <img src="/images/{{ trip.image }}" alt="trip thumbnail" class="card-img-top">
@@ -13,4 +13,4 @@
             </div>
         </div>
     </div>
-</div>>
+</div>
