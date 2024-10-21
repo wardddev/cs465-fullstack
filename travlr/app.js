@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 // register handlebars partials (https://www.npmjs.com/package/hbs)
 handlebars.registerPartials(__dirname + '/app_server/views/partials', () => {
   // debug to verify
-  console.log('Partials registered');
+  // console.log('Partials registered');
 });
 
 
@@ -36,6 +36,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Enable CORS
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+// wire-up routes to controllers
 app.use('/index', indexRouter); // won't render with just '/', defaults to index.html
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
