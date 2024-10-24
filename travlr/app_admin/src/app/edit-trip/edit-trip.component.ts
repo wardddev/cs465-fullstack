@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, Form } from "@angular/forms";
+import { Router } from '@angular/router';
+
 import { TripDataService } from '../services/trip-data.service';
 import { Trip } from '../models/trip';
 
@@ -15,22 +16,22 @@ import { Trip } from '../models/trip';
 
 export class EditTripComponent implements OnInit {
   public editForm!: FormGroup;
-  trip!:Trip;
+  trip!: Trip;
   submitted = false;
-  message: string='';
+  message : string = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private tripDataService: TripDataService
-  ) { }
+  ) {}
 
-  ngOnInit(): void{
-
+  ngOnInit(): void {
     // Retrieve stashed trip ID
     let tripCode = localStorage.getItem("tripCode");
     if (!tripCode) {
       alert("Something wrong, couldn't find where I stashed tripCode!");
+      
       this.router.navigate(['']);
       return;
     }
@@ -47,46 +48,46 @@ export class EditTripComponent implements OnInit {
       resort: ['', Validators.required],
       perPerson: ['', Validators.required],
       image: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['', Validators.required]
     })
 
     this.tripDataService.getTrip(tripCode)
-      .subscribe({
-        next:(value:any) => {
-          this.trip = value;
-          // Populate our record into the form
-          this.editForm.patchValue(value[0]);
-          if(!value)
-          {
-            this.message='No Trip Retrieved';
-          }
-          else {
-            this.message='Trip: ' + tripCode + ' retrieved';
-          }
-          console.log(this.message);
-        },
-        error: (error:any) => {
-          console.log('Error' + error);
+    .subscribe({
+      next: (value: any) => {
+        this.trip = value;
+        // Populate our record into the form
+        this.editForm.patchValue(value[0]);
+        if(!value) {
+          this.message = 'No Trip Retrieved!';
+        } else {
+          this.message = 'Trip: ' + tripCode + ' retrieved';
         }
-      })
+        console.log(this.message);
+      },
+      error: (error: any) => {
+        console.log('Error: ' + error);
+      }
+    })
   }
 
   public onSubmit() {
     this.submitted = true;
 
-    if(this.editForm.valid)
-    {
+    if(this.editForm.valid) {
       this.tripDataService.updateTrip(this.editForm.value)
-      .subscribe( {
+      .subscribe({
         next: (value: any) => {
           console.log(value);
           this.router.navigate(['']);
         },
         error: (error: any) => {
-      console.log('Error: ' + error);
-      }});
+          console.log('Error: ' + error);
+        }
+      })
     }
   }
-// get the form short name to access the form fields
-get f() { return this.editForm.controls; }
+
+  // get the form short name to access the form fields
+  get f() { return this.editForm.controls; }
 }
+

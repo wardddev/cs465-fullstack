@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
 import { Trip } from '../models/trip';
 
 @Component({
@@ -17,7 +18,7 @@ export class TripCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-
+    
   }
 
   public editTrip(trip: Trip) {
