@@ -52,7 +52,7 @@
 
         <div class="form-group">
             <label>Image:</label>
-            <input type="text" formControlName="Image" placeholder="image" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['image'].errors}">
+            <input type="text" formControlName="image" placeholder="Image" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['image'].errors}">
             <div *ngIf="submitted && f['image'].errors">
                 <div *ngIf="f['image'].errors?.['required']">Image Name is required</div>
             </div>            
@@ -68,4 +68,4 @@
 
         <button type="submit" class="btn btn-info">Save</button>
     </form>
-</div>>
+</div>
