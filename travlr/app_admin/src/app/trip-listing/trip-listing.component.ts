@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { TripCardComponent } from '../trip-card/trip-card.component';
 
+import { TripDataService } from '../services/trip-data.service';
 import { Trip } from '../models/trip';
 
-import { TripCardComponent } from '../trip-card/trip-card.component';
-import { TripDataService } from '../services/trip-data.service';
+import { Router } from '@angular/router';
 
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-trip-listing',
@@ -24,9 +25,10 @@ export class TripListingComponent implements OnInit {
 
   constructor(
     private tripDataService: TripDataService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {
-    console.log('trip-listing constructor');
+    console.log('trip-listing-constructor');
   }
 
   public addTrip(): void {
@@ -38,10 +40,10 @@ export class TripListingComponent implements OnInit {
       .subscribe({
         next: (value: any) => {
           this.trips = value;
-          if(value.length > 0)
-          {
+          if(value.length > 0) {
             this.message = 'There are ' + value.length + ' trips available.';
-          } else {
+          }
+          else {
             this.message = 'There were no trips retrieved from the database.';
           }
           console.log(this.message);
@@ -50,6 +52,10 @@ export class TripListingComponent implements OnInit {
           console.log('Error: ' + error);
         }
       })
+  }
+
+  public isLoggedIn() {
+    return this.authenticationService.isLoggedIn();
   }
 
   ngOnInit(): void {
