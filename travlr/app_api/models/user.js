@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -14,12 +16,6 @@ const userSchema = new mongoose.Schema({
     salt: String
 });
 
-mongoose.model('users', userSchema);
-
-// enable cryptography aspect and JSON web tokens
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-
 // Method to set the password on this record.
 userSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
@@ -30,7 +26,7 @@ userSchema.methods.setPassword = function(password) {
 userSchema.methods.validPassword = function(password) {
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
     return this.hash === hash;
-}
+};
 
 // Method to generate a JSON Web Token for the current record
 userSchema.methods.generateJWT = function() {
@@ -40,8 +36,8 @@ userSchema.methods.generateJWT = function() {
         email: this.email,
         name: this.name,
     },
-    process.env.JWT_SECRET, // SECRET stored in .env file
-    { expiresIn: '1h' }); // Token expires an hour from creation
+    process.env.JWT_SECRET, //SECRET stored in .env file
+    { expiresIn: '1h' }); //Token expires an hour from creation
 };
 
 const User = mongoose.model('users', userSchema);

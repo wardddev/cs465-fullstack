@@ -24,6 +24,7 @@ const tripsList = async(req, res) => {
             .status(200)
             .json(q);
     }
+
 };
 
 // GET: /trips/:tripCode - lists a single trips
@@ -48,9 +49,10 @@ const tripsFindByCode = async(req, res) => {
             .status(200)
             .json(q);
     }
+
 };
 
-// POST: /trips - Adds a new Trip
+// POST: /trips - Add a new Trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const tripsAddTrip = async(req, res) => {
@@ -67,19 +69,20 @@ const tripsAddTrip = async(req, res) => {
 
     const q = await newTrip.save();
 
-        if(!q) { // Database returned no data
-            return res
-                .status(404)
+    if(!q)
+    { // Database returned no data
+        return res
+                .status(400)
                 .json(err);
-        } else {
-            return res
-                .status(201)
-                .json(q);
-        }
+    } else { // Return new trip
+        return res
+            .status(201)
+            .json(q);
+    }
 
-        // Uncomment the following line to show results of operation
-        // on the console
-        // console.log(q);
+    // Uncomment the following line to show results of operation
+    // on the console
+    // console.log(q);
 };
 
 // PUT: /trips/:tripCode - Updates a Trip
@@ -87,11 +90,11 @@ const tripsAddTrip = async(req, res) => {
 // and JSON message to the requesting client
 const tripsUpdateTrip = async(req, res) => {
     // Uncomment for debugging
-    console.log(req.params);
-    console.log(req.body);
+    // console.log(req.params);
+    // console.log(req.body);
 
     const q = await Model
-        .findOneAndUpdate( // locate specified record from database
+        .findOneAndUpdate(
             { 'code' : req.params.tripCode },
             {
                 code: req.body.code,
@@ -102,24 +105,25 @@ const tripsUpdateTrip = async(req, res) => {
                 perPerson: req.body.perPerson,
                 image: req.body.image,
                 description: req.body.description
-            } 
+            }
         )
-    .exec();
+        .exec();
 
-    if(!q) { // Database returned no data
-        return res
-            .status(400)
-            .json(err);    
-    } else { // Return resulting updated trip
-        return res
-            .status(201)
-            .json(q);
-    }
+        if(!q)
+        { // Database returned no data
+            return res
+                    .status(400)
+                    .json(err);
+        } else { // Return updated trip
+            return res
+                .status(201)
+                .json(q);
+        }
 
-    // Uncomment the following line to show results of operation
-    // on the console
-    // console.log(q);
-};
+        // Uncomment the following line to show results of operation
+        // on the console
+        // console.log(q);
+}
 
 module.exports = {
     tripsList,
