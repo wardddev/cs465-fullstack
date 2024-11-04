@@ -2,8 +2,6 @@
 
 # Web-based Travlr Getaways Application
 # **CS465 Project Software Design Document**
-Version 2.0
-David Ruth CS-465 10/25/24
 
 ## Table of Contents
 Contents
