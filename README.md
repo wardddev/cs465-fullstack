@@ -33,9 +33,7 @@ Contents
 | Version | Date       | Author         | Comments                                                                          |
 |---------|------------|----------------|-----------------------------------------------------------------------------------|
 | 1.0     | 09/22/24   | David Ruth     | Updated Executive Summary, Design Constraints, and Component Diagram description. |
-|---------|------------|----------------|-----------------------------------------------------------------------------------|
 | 1.1     | 10/24/24   | David Ruth     | Updated Sequence Diagram, Class Diagram, API Endpoints, User Interface.           |
-|---------|------------|----------------|-----------------------------------------------------------------------------------|
 | 2.0     | 10/25/24   | David Ruth     | Document Complete.                                                                |
 
 ## [Executive Summary]
