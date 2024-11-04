@@ -1,4 +1,4 @@
-/* GET Homepage */
+/* GET Homepage view */
 const index = (req, res) => {
     res.render('index', {title: "Travlr Getaways"});
 };
