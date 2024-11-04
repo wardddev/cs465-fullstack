@@ -51,12 +51,14 @@ Server (Express)
 1. Open folder in Windows Powershell
 2. Execute "npm start"
 3. Open "http://localhost:3000/" in browser
+
 ![image](https://github.com/user-attachments/assets/30ff5d5c-059e-4b51-89cd-a0edba2aa1f5)
 
 SPA (Angular)
 1. Open folder "\app_admin" in Windows Powershell
 2. Execute "ng serve"
 3. Open "http://localhost:4200/" in browser
+
 ![image](https://github.com/user-attachments/assets/ddad8a70-7564-4161-940c-9d81c9809ff0)
 
 
