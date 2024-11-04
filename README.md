@@ -13,6 +13,10 @@ Contents
 
 [Executive Summary](#executive-summary)
 
+[Requirements](#requirements)
+
+[How To Run](#how-to-run)
+
 [Design Constraints](#design-constraints)
 
 [System Architecture View](#system-architecture-view)
@@ -38,6 +42,23 @@ Contents
 The client Travlr Getaways is requesting a travel booking site for customers to book travel packages. Customers should have the ability to create an account, search for travel packages by location and price point, view their itineraries, and book reservations with the travel agency. The client also requests an admin-only site where their administrators can maintain a customer base, available travel packages, and pricing for each item and package.
 
 The proposed solution is a full-stack web application using MEAN stack. The development environment will consist of the Node.js server and Express framework. The back-end will consist of the server containing the MongoDB NoSQL database. The MongoDB database will hold the required data, such as travel packages, pricing, and travel booking trips. The front-end consists of a customer-facing website using HTML, CSS, Javascript, and Angular. Customers can use this website for all the require needs, such as booking reservations. Administrator single-page applications (SPA) will use Angular to maintain the customer base and travel packages.
+
+## [Requirements]
+
+
+## [How To Run]
+Server (Express)
+1. Open folder in Windows Powershell
+2. Execute "npm start"
+3. Open "http://localhost:3000/" in browser
+![image](https://github.com/user-attachments/assets/30ff5d5c-059e-4b51-89cd-a0edba2aa1f5)
+
+SPA (Angular)
+1. Open folder "\app_admin" in Windows Powershell
+2. Execute "ng serve"
+3. Open "http://localhost:4200/" in browser
+![image](https://github.com/user-attachments/assets/ddad8a70-7564-4161-940c-9d81c9809ff0)
+
 
 ## [Design Constraints]
 Using the MEAN stack for the development of this full-stack web application can have several constraints. MongoDB is a great choice for the database, but will require maintenance upkeep and data redundancy. If the database’s indexes are not properly implemented or have errors, the performance will lower and require fixing the errors before it can be restored. MongoDB has been documented to duplicate data as well, leading to data redundancy. This happens because MongoDB lacks certain functionalities like joins. Without these, more storage is required and can become a problem long-term.
