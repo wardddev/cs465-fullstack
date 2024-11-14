@@ -11,13 +11,15 @@ let transporter = nodemailer.createTransport({
 });
 
 async function sendEmail(req, res) {
+    const userEmail = req.body.email;
+
     try {
         let info = await transporter.sendMail({
-            from: '"David Ruth" <wardd.dev@outlook.com>',
-            to: 'wardd.dev@outlook.com',
-            subject: 'Test Email',
-            text: 'This is a test email.',
-            html: '<b>This is a test email from localhost.</b>'
+            from: '"Travlr Getaways" <wardd.dev@outlook.com>',
+            to: userEmail,
+            subject: 'Welcome to Travlr Getaways',
+            text: 'Your email is valid.',
+            html: '<b>Your email is valid. Thank you.</b>'
         });
         console.log('Email Sent: ', info.messageId);
         res.status(200).send({ message: 'Email sent successfully', info: info.messageId });
