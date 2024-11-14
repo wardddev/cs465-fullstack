@@ -1,3 +1,4 @@
+// script to send email submission to Express backend
 async function sendEmail(event) {
     event.preventDefault();
     const email = document.getElementById("emailInput").value;
