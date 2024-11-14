@@ -4,6 +4,7 @@ const router = express.Router(); // Router logic
 // This is where we import the controllers we will route
 const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
+const mailingController = require('../controllers/mailing');
 
 // Enable JSON Web Tokens
 const jwt = require('jsonwebtoken');
@@ -67,5 +68,10 @@ router
     .route('/trips/:tripCode')
     .get(tripsController.tripsFindByCode)
     .put(authenticateJWT, tripsController.tripsUpdateTrip);
+
+// Define route for mailing endpoint
+router
+    .route('/mailing')
+    .post(mailingController.sendEmail);
 
 module.exports = router;
