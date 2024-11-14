@@ -1,15 +1,15 @@
 const nodemailer = require('nodemailer');
 const validator = require('validator');
 
-//require('dotenv').config();
+require('dotenv').config();
 
 // Use test SMTP account mailtrap for capturing test emails
 let transporter = nodemailer.createTransport({
-    host: 'sandbox.smtp.mailtrap.io', // SMTP host
-    port: 2525, // mailtrap
+    host: process.env.SMTP_HOST,        // SMTP host
+    port: process.env.SMTP_PORT,        // SMTP port mailtrap
     auth: {
-        user: '3b9335354c9853', // SMTP username
-        pass: 'd007592d1b1a2b' // SMTP password
+        user: process.env.SMTP_USER,    // SMTP username
+        pass: process.env.SMTP_PASS     // SMTP password
     }
 });
 
