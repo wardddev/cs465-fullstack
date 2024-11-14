@@ -71,6 +71,6 @@ router
 
 // Define route for mailing endpoint
 router
-    .post('/send-email', sendEmail);
+    .post('/send-email', mailingController.sendEmail);
 
 module.exports = router;
