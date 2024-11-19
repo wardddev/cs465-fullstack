@@ -5,25 +5,27 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // Define routers
-var indexRouter = require('./app_server/routes/index');
-var usersRouter = require('./app_server/routes/users');
-var travelRouter = require('./app_server/routes/travel');
-var roomsRouter = require('./app_server/routes/rooms');
-var aboutRouter = require('./app_server/routes/about');
-var mealsRouter = require('./app_server/routes/meals');
-var newsRouter = require('./app_server/routes/news');
-var contactRouter = require('./app_server/routes/contact');
+var indexRouter = require('./app_server/routes/index');     // Add comments
+var usersRouter = require('./app_server/routes/users');     // Add comments
+var travelRouter = require('./app_server/routes/travel');   // Add comments
+var roomsRouter = require('./app_server/routes/rooms');     // Add comments
+var aboutRouter = require('./app_server/routes/about');     // Add comments
+var mealsRouter = require('./app_server/routes/meals');     // Add comments
+var newsRouter = require('./app_server/routes/news');       // Add comments
+var contactRouter = require('./app_server/routes/contact'); // Add comments
 
 var apiRouter = require('./app_api/routes/index');
 
 var handlebars = require('hbs');
 
-// Wire in our authentication module
+// Handles user authentication
 var passport = require('passport');
 require('./app_api/config/passport');
 
 // Bring in the database
-require('./app_api/models/db');
+require('./app_api/models/db'); // Establish MongoDB connection
+
+// Manage API keys
 require('dotenv').config();
 
 var app = express();
@@ -31,11 +33,11 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 
-// register handlebars partials (https://www.npmjs.com/package/hbs)
+// register handlebars partials
 handlebars.registerPartials(__dirname + '/app_server/views/partials');
-
 app.set('view engine', 'hbs');
 
+// Define middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -44,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 // Enable CORS
+// FIX: Make Access-Control-Allow-Origin dynamic to avoid exposing to unintended domains
 app.use('/api', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -51,7 +54,8 @@ app.use('/api', (req, res, next) => {
   next();
 });
 
-// Catch unauthorized error and create 401
+// Catches unauthorized error and create 401
+// FIX: Add logging to track unauthorized access attempts for security audits
 app.use((err, req, res, next) => {
   if(err.name === 'UnauthorizedError') {
     res
@@ -60,17 +64,19 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/travel', travelRouter);
-app.use('/rooms', roomsRouter);
-app.use('/about', aboutRouter);
-app.use('/meals', mealsRouter);
-app.use('/news', newsRouter);
-app.use('/contact', contactRouter);
-app.use('/api', apiRouter);
+// Define routes
+app.use('/', indexRouter);          // Add comments
+app.use('/users', usersRouter);     // Add comments
+app.use('/travel', travelRouter);   // Add comments
+app.use('/rooms', roomsRouter);     // Add comments
+app.use('/about', aboutRouter);     // Add comments
+app.use('/meals', mealsRouter);     // Add comments
+app.use('/news', newsRouter);       // Add comments
+app.use('/contact', contactRouter); // Add comments
+app.use('/api', apiRouter);         // Add comments
 
-// catch 404 and forward to error handler
+// Catches 404 errors, renders error pages
+// FIX: Add logging to track errors for debugging
 app.use(function(req, res, next) {
   next(createError(404));
 });
