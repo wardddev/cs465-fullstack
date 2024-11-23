@@ -24,7 +24,7 @@ const travel = async function(req, res, next) {
         if (!(trips instanceof Array)) {
             message = 'API lookup error';
         } else if (!trips.length) {
-            message = 'No trips exist in our database!';
+            message = 'No trips exist in our database.';
         }
 
         res.render('travel', {
@@ -37,7 +37,7 @@ const travel = async function(req, res, next) {
         res.status(500).render('travel', {
             title: 'Travlr Getaways',
             trips: [],
-            message: 'An error occurred while fetching trips. Please try again later.'
+            message: 'An error occurred while fetching trips.'
         });
     }
 };
