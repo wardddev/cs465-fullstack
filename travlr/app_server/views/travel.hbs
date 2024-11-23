@@ -16,6 +16,13 @@
 					<div>
 						<div class="body">
 							<h1>Travel</h1>
+							<div class="dropdown">
+								<button onclick="sorting()" class="dropbtn">Filter</button>
+								<div id="myDropdown" class="dropdown-content">
+									<a href="#">Alphabetically</a>
+									<a href="#">Pricing</a>
+								</div>
+							</div>
 							<ul id="sites">
 							{{#each trips}}
 								<li>
@@ -32,5 +39,7 @@
 		</div>
 		{{> footer}}
 	</div>
+
+	<script src="/javascripts/sorting.js"></script>
 </body>
 </html>
