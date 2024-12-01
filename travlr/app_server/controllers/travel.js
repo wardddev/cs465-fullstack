@@ -1,36 +1,52 @@
-const tripsEndpoint = 'http://localhost:3000/api/trips';
+const tripsEndpoint = process.env.TRIPS_API_ENDPOINT || 'http://localhost:3000/api/trips';
 const options = {
     method: 'GET',
     headers: {
         'Accept': 'application/json'
     }
-}
+};
 
-// var fs = require('fs');
-// var trips = JSON.parse(fs.readFileSync('./data/trips.json','utf8'));
+/* Fetch Trips from API with Sorting */
+const fetchTrips = async (sortBy = 'name', sortDirection = 'asc') => {
+    const response = await fetch(`${tripsEndpoint}?sortBy=${sortBy}&sortDirection=${sortDirection}`, options);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch trips: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+};
 
-/* GET Travel view */
+/* GET Travel view with Sorting */
 const travel = async function(req, res, next) {
-    // console.log('TRAVEL CONTROLLER BEGIN');
-    await fetch(tripsEndpoint, options)
-        .then(res => res.json())
-        .then(json => {
-            // console.log(json);
-            let message = null;
-            if(!(json instanceof Array)) {
-                message = 'API lookup error';
-                json = [];
-            } else {
-                if(!json.length) {
-                    message = 'No trips exist in our database!';
-                }
-            }
-            res.render('travel', {title: 'Travlr Getaways', trips: json, message});
-        })
-        .catch(err => res.status(500).send(e.message));
-    // console.log('TRAVEL CONTROLLER AFTER RENDER');
+    try {
+        const sortBy = req.query.sortBy || 'name'; // Default to sorting by name
+        const sortDirection = req.query.sortDirection || 'asc'; // Default to ascending order
+
+        const trips = await fetchTrips(sortBy, sortDirection);
+        let message = null;
+
+        if (!(trips instanceof Array)) {
+            message = 'API lookup error';
+        } else if (!trips.length) {
+            message = 'No trips exist in our database!';
+        }
+
+        res.render('travel', {
+            title: 'Travlr Getaways',
+            trips: trips || [],
+            message,
+            sortBy,
+            sortDirection
+        });
+    } catch (err) {
+        console.error('Error fetching trips:', err.message);
+        res.status(500).render('travel', {
+            title: 'Travlr Getaways',
+            trips: [],
+            message: 'An error occurred while fetching trips. Please try again later.'
+        });
+    }
 };
 
 module.exports = {
     travel
-}
+};

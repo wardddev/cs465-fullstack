@@ -5,26 +5,27 @@ const Model = mongoose.model('trips');
 // GET: /trips - lists all the trips
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const tripsList = async(req, res) => {
-    const q = await Model
-        .find({}) // No filter, return all records
-        .exec();
+const tripsList = async (req, res) => {
+    try {
+        // Extract sorting parameters from the query string
+        const sortBy = req.query.sortBy || 'name'; // Default, sorts by name
+        const sortDirection = req.query.sortDirection === 'desc' ? -1 : 1; // Default, ascending order
 
-    // Uncomment the following line to show results
-    // of the query on the console
-    // console.log(q);
+        // Fetch trips with sorting
+        const trips = await Model
+            .find({})
+            .sort({ [sortBy]: sortDirection })
+            .exec();
 
-    if(!q)
-    { // Database returned no data
-        return res
-                .status(404)
-                .json(err);
-    } else { // Return resulting trip list
-        return res
-            .status(200)
-            .json(q);
+        if (!trips || trips.length === 0) {
+            return res.status(404).json({ message: 'No trips found' });
+        }
+
+        res.status(200).json(trips);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'An error occurred while fetching trips' });
     }
-
 };
 
 // GET: /trips/:tripCode - lists a single trips
