@@ -3,11 +3,25 @@ async function sendEmail(event) {
     event.preventDefault();
 
     // Get form data
+    const emailInput = document.getElementById("emailInput");
+    const tripInput = document.getElementById("tripInput");
+    const guestsInput = document.getElementById("guestsInput");
+
+    if (!emailInput || !tripInput || !guestsInput) {
+        console.error("Error: Form elements not found.");
+        return;
+    }
+
     const reservationData = {
-        email: document.getElementById("emailInput").value,
-        trip: document.getElementById("tripInput").value,
-        guests: document.getElementById("guestsInput").value,
+        email: emailInput.value,
+        trip: tripInput.value,
+        guests: guestsInput.value,
     };
+
+    if (!reservationData.email || !reservationData.trip || !reservationData.guests) {
+        console.error("Error: Form data not filled.");
+        return;
+    }
 
     try {
         const response = await fetch('/api/mailing', {
@@ -15,13 +29,14 @@ async function sendEmail(event) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify(reservationData),
         });
 
         if (response.ok) {
             alert("Reservation submitted successfully! Check your email for confirmation.");
         } else {
             alert("An error occurred while submitting the reservation.");
+            console.error("Error submitting reservation", response.status, response.statusText);
         }
     } catch (error) {
         console.error("Error submitting reservation", error);
