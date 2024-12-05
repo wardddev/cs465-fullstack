@@ -1,7 +1,13 @@
 // script to send email submission to Express backend
 async function sendEmail(event) {
     event.preventDefault();
-    const email = document.getElementById("emailInput").value;
+
+    // Get form data
+    const reservationData = {
+        email: document.getElementById("emailInput").value,
+        trip: document.getElementById("tripInput").value,
+        guests: document.getElementById("guestsInput").value,
+    };
 
     try {
         const response = await fetch('/api/mailing', {
@@ -9,17 +15,17 @@ async function sendEmail(event) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({ email }),
         });
 
         if (response.ok) {
-            alert("Email sent successfully.");
+            alert("Reservation submitted successfully! Check your email for confirmation.");
         } else {
-            alert("Failed to send email.");
+            alert("An error occurred while submitting the reservation.");
         }
     } catch (error) {
-        console.error("Error sending email:", error);
-        alert("An error occurred while sending the email.");
+        console.error("Error submitting reservation", error);
+        alert("An error occurred while submitting the reservation.");
     }
 }
 

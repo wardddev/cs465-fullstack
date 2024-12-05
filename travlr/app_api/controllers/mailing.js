@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const validator = require('validator');
+const Reservation = require('../models/reservation');
 
 require('dotenv').config();
 
@@ -14,26 +15,42 @@ let transporter = nodemailer.createTransport({
 });
 
 async function sendEmail(req, res) {
-    const userEmail = req.body.email;
+    const { email, trip, guests } = req.body;
 
-    // validates email format
-    if (!validator.isEmail(userEmail)) {
+    // validates fields
+    if (!validator.isEmail(email)) {
         return res.status(400).send({ error: 'Invalid email format' });
     }
 
     try {
-        let info = await transporter.sendMail({
+        // save to database
+        const reservation = new Reservation({ email, trip, guests });
+        await reservation.save();
+
+        // send email
+        const emailFields = {
             from: '"Travlr Getaways" <wardd.dev@outlook.com>',
-            to: userEmail,
-            subject: 'Welcome to Travlr Getaways',
-            text: 'Your email is valid.',
-            html: '<b>Your email is valid. Thank you.</b>'
-        });
+            to: email,
+            subject: 'Reservation Confirmation from Travlr Getaways',
+            html: `
+                <h1>Reservation Confirmation</h1>
+                <p>Thank you for your reservation.</p>
+                <p>Here are the details of your reservation:</p>
+                <ul>
+                    <li><strong>Trip:</strong> ${trip}</li>
+                    <li><strong>Guests:</strong> ${guests}</li>
+                </ul>
+                <p>Thank you for choosing Travlr Getaways!</p>
+            `,
+        };
+
+        let info = await transporter.sendMail(emailFields);
         console.log('Email Sent: ', info.messageId);
-        res.status(200).send({ message: 'Email sent successfully', info: info.messageId });
+
+        return res.status(200).send({ message: 'Email sent successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'Failed to send email' });
+        return res.status(500).send({ error: 'Error sending email' });
     }
 }
 
