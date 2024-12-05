@@ -18,8 +18,14 @@ async function sendEmail(event) {
         guests: guestsInput.value,
     };
 
+    // Validate form data
     if (!reservationData.email || !reservationData.trip || !reservationData.guests) {
         console.error("Error: Form data not filled.");
+        return;
+    }
+
+    if (reservationData.guests <= 0) {
+        alert("Guests must be a positive number.");
         return;
     }
 
